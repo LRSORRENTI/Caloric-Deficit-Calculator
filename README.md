@@ -4,6 +4,8 @@ A modern, single-page calculator that estimates a daily calorie target to reach 
 weight in a chosen number of days. It uses the Mifflin-St Jeor equation with activity
 level adjustments and supports U.S. weight units (lbs) with height in centimeters.
 
+![App preview](img/app-image.png)
+
 ## Features
 
 - Activity-based TDEE estimate (low / medium / high)
