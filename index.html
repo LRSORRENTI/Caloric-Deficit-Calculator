@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calorie / Weight Loss Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <main class="relative overflow-hidden hero-shell">
+      <div class="absolute inset-0 -z-10">
+        <div
+          class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-emerald-500/20 blur-3xl"
+        ></div>
+        <div
+          class="absolute top-32 right-0 h-[28rem] w-[28rem] rounded-full bg-cyan-400/20 blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"
+        ></div>
+      </div>
+
+      <section
+        class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14 lg:flex-row lg:items-start"
+      >
+        <div class="lg:w-1/2">
+          <p class="text-xs uppercase tracking-[0.4em] text-emerald-300">
+            Precision planning
+          </p>
+          <h1
+            class="mt-4 font-display text-4xl leading-tight text-white sm:text-5xl"
+          >
+            Calorie + Weight Loss Calculator
+          </h1>
+          <p class="mt-4 text-base text-slate-300">
+            Calculate a safe daily calorie target to reach your goal weight
+            within a specific timeframe. Uses the Mifflin-St Jeor equation with
+            activity-level adjustments.
+          </p>
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="glass-card">
+              <p class="text-sm text-slate-300">Formula</p>
+              <p class="mt-2 text-lg font-semibold text-white">
+                Mifflin-St Jeor
+              </p>
+            </div>
+            <div class="glass-card">
+              <p class="text-sm text-slate-300">Units</p>
+              <p class="mt-2 text-lg font-semibold text-white">lbs + cm</p>
+            </div>
+            <div class="glass-card">
+              <p class="text-sm text-slate-300">Activity</p>
+              <p class="mt-2 text-lg font-semibold text-white">
+                Low / Medium / High
+              </p>
+            </div>
+            <div class="glass-card">
+              <p class="text-sm text-slate-300">Outcome</p>
+              <p class="mt-2 text-lg font-semibold text-white">
+                Daily calorie max
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full lg:w-1/2">
+          <div
+            class="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur"
+          >
+            <form id="calculator-form" class="grid gap-6">
+              <div>
+                <label class="label" for="gender">Gender</label>
+                <div class="mt-2 grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    class="choice-button"
+                    data-value="male"
+                    aria-pressed="true"
+                  >
+                    Male
+                  </button>
+                  <button
+                    type="button"
+                    class="choice-button"
+                    data-value="female"
+                    aria-pressed="false"
+                  >
+                    Female
+                  </button>
+                </div>
+                <input type="hidden" id="gender" name="gender" value="male" />
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label class="label" for="age">Age</label>
+                  <div class="stepper">
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="-1"
+                      aria-label="Decrease age"
+                    >
+                      -
+                    </button>
+                    <input
+                      class="input stepper-input"
+                      type="number"
+                      id="age"
+                      name="age"
+                      min="14"
+                      max="100"
+                      placeholder="e.g. 30"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="1"
+                      aria-label="Increase age"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="height">Height (cm)</label>
+                  <div class="stepper">
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="-1"
+                      aria-label="Decrease height"
+                    >
+                      -
+                    </button>
+                    <input
+                      class="input stepper-input"
+                      type="number"
+                      id="height"
+                      name="height"
+                      min="120"
+                      max="230"
+                      placeholder="e.g. 175"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="1"
+                      aria-label="Increase height"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label class="label" for="weight">Current Weight (lbs)</label>
+                  <div class="stepper">
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="-1"
+                      aria-label="Decrease current weight"
+                    >
+                      -
+                    </button>
+                    <input
+                      class="input stepper-input"
+                      type="number"
+                      id="weight"
+                      name="weight"
+                      min="80"
+                      max="500"
+                      placeholder="e.g. 180"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="1"
+                      aria-label="Increase current weight"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="goal-weight"
+                    >Goal Weight (lbs)</label
+                  >
+                  <div class="stepper">
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="-1"
+                      aria-label="Decrease goal weight"
+                    >
+                      -
+                    </button>
+                    <input
+                      class="input stepper-input"
+                      type="number"
+                      id="goal-weight"
+                      name="goal-weight"
+                      min="80"
+                      max="500"
+                      placeholder="e.g. 160"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="1"
+                      aria-label="Increase goal weight"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label class="label" for="days">Days to Goal</label>
+                  <div class="stepper">
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="-1"
+                      aria-label="Decrease days to goal"
+                    >
+                      -
+                    </button>
+                    <input
+                      class="input stepper-input"
+                      type="number"
+                      id="days"
+                      name="days"
+                      min="7"
+                      max="365"
+                      placeholder="e.g. 90"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="stepper-btn"
+                      data-step="1"
+                      aria-label="Increase days to goal"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="activity">Activity Level</label>
+                  <!--
+                  <select class="input" id="activity" name="activity" required>
+                    <option value="low">Low (light movement)</option>
+                    <option value="medium">Medium (3-5 workouts/week)</option>
+                    <option value="high">High (daily training)</option>
+                  </select>
+                  -->
+                  <div class="dropdown" data-dropdown>
+                    <input
+                      type="hidden"
+                      id="activity"
+                      name="activity"
+                      value="low"
+                    />
+                    <button
+                      type="button"
+                      class="dropdown-button"
+                      data-dropdown-toggle
+                      aria-haspopup="listbox"
+                      aria-expanded="false"
+                    >
+                      <span data-dropdown-label>Low (light movement)</span>
+                      <span class="dropdown-chevron"></span>
+                    </button>
+                    <div class="dropdown-menu" role="listbox">
+                      <button
+                        type="button"
+                        class="dropdown-item"
+                        data-value="low"
+                      >
+                        Low (light movement)
+                      </button>
+                      <button
+                        type="button"
+                        class="dropdown-item"
+                        data-value="medium"
+                      >
+                        Medium (3-5 days/wk)
+                      </button>
+                      <button
+                        type="button"
+                        class="dropdown-item"
+                        data-value="high"
+                      >
+                        High (daily training)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="primary-button">Calculate</button>
+            </form>
+
+            <div
+              id="result"
+              class="mt-8 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6"
+            >
+              <p class="text-sm uppercase tracking-[0.3em] text-emerald-200">
+                Recommendation
+              </p>
+              <p
+                id="result-text"
+                class="mt-3 text-xl font-semibold text-white"
+              ></p>
+              <p id="result-detail" class="mt-2 text-sm text-slate-200"></p>
+            </div>
+
+            <p class="mt-6 text-xs text-slate-400">
+              This calculator provides an estimate only. Consult a healthcare
+              professional for personal advice.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>
